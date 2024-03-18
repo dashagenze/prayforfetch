@@ -1,89 +1,39 @@
-const GITHUB_USERS = `https://api.github.com/users`
-
-// HTTP-методы
-const POST = 'POST'
-const DELETE = 'DELETE'
-const PUT = 'PUT'
+const USERNAME_FORM = document.getElementById('username');
 
 
-let getDB = () => fetch(GITHUB_USERS)
-    .then(r => {
-        console.log(r)
-    })
-    .then(r => r.json())
-    .then(r => console.log(r))
-    .then(r => {
+USERNAME_FORM.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const formData = new FormData(USERNAME_FORM);
+    const username = formData.get('username');
 
-        // СПИСОК С ПОЛЬЗОВАТЕЛЯМИ
-        let userLogins = [];
-        for (let userData of r) {
-            let username = userData.login;
-            userLogins.push(username);
-        }
+    getRepos(username)
+        .catch(e => console.log(e))
 
-        // ПОЛУЧИТЬ ИНФУ ПО КОНКРЕТНОМУ ПОЛЬЗОВАТЕ
-        async function getUserData(userLogin) {
-            let userData
-            for (let username of userLogins) {
-                if (userLogin === username) {
-                    await fetch(`${GITHUB_USERS}/${userLogin}`)
-                        .then(r => r.json())
-                        .then(r => {
-                            console.log(r)
-                            userData = r;
-                        })
-                        .catch(e => console.log(e))
-                }
+})
+
+
+async function getRepos (username) {
+    await fetch(`https://api.github.com/users/${username}/repos`)
+        .then(r => r.json())
+        .then(repos => {
+
+            // let title = document.createElement('h2');
+            // title.textContent = `📑Репозитории ${username}!`;
+            //
+            // let div = document.getElementById('div');
+            // div.append(title);
+
+            for (let repo of repos) {
+
+                console.log(repo.name);
+                console.log(repo.url);
             }
-            console.log(userData)
-            return userData
-            //возвращает объект с характеристиками пользователя {login: 'defunkt', id: 2, node_id: 'MDQ6VXNlcjI=', avatar_url
-        }
 
-        getUserData('mojombo')
-            .then(r => r.response())
-            .then(r => r.json())
-            .then(r => console.log(r))
-            .catch(e => console.log(e))
+
+        })
+        .catch(e => console.log(e))
+
+}
 
 
 
-
-        // let getUserRepos = (username) => {
-        //     let userData = getUserData(username);
-        //     let reposData = [];
-        //     for (let repo in userData) {
-        //         let repo = userData.repos_url
-        //         reposData.push(repo)
-        //         console.log(reposData);
-        //     }
-        //     return reposData
-        // }
-        // console.log(getUserRepos('mojombo'))
-
-
-        // fetch('https://api.github.com/users/mojombo/repos')
-        //     .then(r => r.json())
-        //     .then(r => {
-        //         console.log(r)
-        //         let reposNames = [];
-        //         for (let repo of r) {
-        //             let repoName = r.name;
-        //             reposNames.push(repoName);
-        //             console.log(reposNames);
-        //         }
-        //         console.log(r.name)
-        //
-        //     })
-        //     .catch(e => console.log(e))
-
-//https://api.github.com/users/mojombo/repos
-
-        // console.log(getRepos("mojombo"))
-        // console.log(getUser(1));
-
-    })
-// .catch(e => console.log(e))
-
-
-getDB()
