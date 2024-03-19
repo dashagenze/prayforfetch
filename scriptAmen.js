@@ -15,7 +15,7 @@ USERNAME_FORM.addEventListener('submit', (e) => {
     } catch {
         alert(e);
     }
-    
+
     USERNAME_FORM.style.display = 'none';
 })
 
@@ -28,7 +28,7 @@ async function getRepos (username) {
         })
         .then(r => r.json())
         .catch(e => {
-            console.log(e)
+            console.log(e.message)
 
         })
         .then(repos => {
@@ -39,7 +39,7 @@ async function getRepos (username) {
                 title.textContent = `У пользователя ${username} не найдено открытых репозиториев :)`
             }
 
-            try {
+            // try {
                 for (let repo of repos) {
                     let repoLink = document.createElement('a');
                     repoLink.setAttribute('href', `${repo.url}`);
@@ -52,12 +52,12 @@ async function getRepos (username) {
                     console.log(repo.name);
                     console.log(repo.url);
                 }
-            } catch (e) {
-                if (e instanceof TypeError) {
-                    alert(`такого пользователя нет`)
-                    location.reload()
-                }
-            }
+            // } catch (e) {
+            //     if (e instanceof TypeError) {
+            //         alert(`такого пользователя нет`)
+            //         location.reload()
+            //     }
+            // }
 
         })
 
