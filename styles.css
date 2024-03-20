@@ -1,0 +1,46 @@
+@keyframes opacity {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.8;
+    }
+}
+* {
+    z-index: 2;
+    position: relative;
+
+}
+
+
+.animatedBack {
+    position: absolute;
+    width: 1600px;
+    height: 720px;
+    opacity: 0.8;
+    background-color: #BFBFBF;
+    animation-timing-function: ease-in;
+    animation-name: opacity;
+    animation-duration: 0.4s;
+    z-index: 3;
+    margin: -20px;
+    overflow: hidden;
+
+}
+
+.animatedMessage {
+    position: absolute;
+    width: 400px;
+    height: 200px;
+    opacity: 1;
+    background-color: #fff;
+    animation-timing-function: ease-in;
+    animation-name: opacity;
+    animation-duration: 0.5s;
+    z-index: 4;
+
+    margin-left: 30%;
+    margin-top: 10%;
+    text-align: center;
+}
+
